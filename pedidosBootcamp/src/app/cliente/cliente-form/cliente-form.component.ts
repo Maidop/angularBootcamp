@@ -12,8 +12,6 @@ import {error} from 'util';
 })
 export class ClienteFormComponent implements OnInit {
   objeto: Cliente;
-  clientes: Cliente[];
-  clientesDropdown: SelectItem[];
 
   constructor(private clienteService: ClienteService,
               private activatedRoute: ActivatedRoute,
@@ -29,14 +27,6 @@ export class ClienteFormComponent implements OnInit {
       } else {
         this.resetaForm();
       }
-    });
-
-    this.clientesDropdown = this.clientes.map(val => {
-      const selectItem: SelectItem = {
-        label: val.nome,
-        value: val
-      };
-      return selectItem;
     });
   }
 

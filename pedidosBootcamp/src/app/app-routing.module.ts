@@ -6,6 +6,7 @@ import {ClienteFormComponent} from './cliente/cliente-form/cliente-form.componen
 import {PedidoComponent} from './pedido/pedido.component';
 import {ProdutoComponent} from './produto/produto.component';
 import {ProdutoFormComponent} from './produto/produto-form/produto-form.component';
+import {PedidoFormComponent} from './pedido/pedido-form/pedido-form.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,9 @@ const routes: Routes = [
   },
   {
     path: 'pedido', component: PedidoComponent,
+  },
+  {
+    path: 'pedido/form', component: PedidoFormComponent,
   }
 ];
 

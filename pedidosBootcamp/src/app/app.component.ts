@@ -16,7 +16,7 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.sidebarService.setMostrar(true);
+    this.sidebarService.setMostrar(false);
   }
 
   abrirFecharMenu() {

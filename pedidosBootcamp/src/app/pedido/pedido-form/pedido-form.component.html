@@ -1,1 +1,18 @@
-<p>pedido-form works!</p>
+<p-card header="Pedido">
+  <div class="container">
+    <div class="text-left m-2">
+      <button pButton
+              (click)="salvar()"
+              type="button"
+              label="Salvar"
+              class="btn btn-primary"></button>
+    </div>
+    <span class="ui-float-label my-4">
+      <p-dropdown id="cliente" [options]="clienteList"
+                  [(ngModel)]="clienteList"
+                  placeholder="Selecione o Cliente"
+                  optionLabel="nome"></p-dropdown>
+      <label for="cliente">Cliente</label>
+    </span>
+  </div>
+</p-card>

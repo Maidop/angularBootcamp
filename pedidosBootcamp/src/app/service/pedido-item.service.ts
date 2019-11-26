@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import {BaseService} from './base.service';
-import {Produto} from '../model/Produto';
+import {PedidoItem} from '../model/pedidoItem';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProdutoService extends BaseService<Produto> {
+export class PedidoItemService extends BaseService<PedidoItem>{
 
   constructor(protected http: HttpClient) {
-    super(http, 'produto');
+    super(http, 'pedido-item');
   }
 }
