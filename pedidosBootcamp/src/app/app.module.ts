@@ -12,14 +12,27 @@ import { ClienteFormComponent } from './cliente/cliente-form/cliente-form.compon
 import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastModule} from 'primeng/toast';
-import {MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {DropdownModule, SidebarModule} from 'primeng/primeng';
+import {SidebarService} from './service/sidebar.service';
+import { PedidoComponent } from './pedido/pedido.component';
+import { PedidoFormComponent } from './pedido/pedido-form/pedido-form.component';
+import { ProdutoComponent } from './produto/produto.component';
+import { ProdutoFormComponent } from './produto/produto-form/produto-form.component';
+import { PedidoItemComponent } from './pedido-item/pedido-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ClienteComponent,
-    ClienteFormComponent
+    ClienteFormComponent,
+    PedidoComponent,
+    PedidoFormComponent,
+    ProdutoComponent,
+    ProdutoFormComponent,
+    PedidoItemComponent
   ],
   imports: [
     BrowserModule,
@@ -29,10 +42,15 @@ import {MessageService} from 'primeng/api';
     CardModule,
     FormsModule,
     BrowserAnimationsModule,
-    ToastModule
+    ToastModule,
+    ConfirmDialogModule,
+    SidebarModule,
+    DropdownModule,
   ],
   providers: [
-    MessageService
+    MessageService,
+    ConfirmationService,
+    SidebarService
   ],
   bootstrap: [AppComponent]
 })

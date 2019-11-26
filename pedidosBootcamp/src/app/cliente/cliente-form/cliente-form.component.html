@@ -5,18 +5,18 @@
               (click)="salvar()"
               type="button"
               label="Novo"
-              class="btn btn-primary">Salvar</button>
+              class="btn btn-primary"></button>
     </div>
-    <span class="ui-float-label my-2">
-      <input class="rounded" id="nome" type="text" size="30" type="text" [(ngModel)]="objeto.nome">
+    <span class="ui-float-label my-4">
+      <input class="rounded" id="nome" type="text" size="30" pInputText [(ngModel)]="objeto.nome">
       <label for="nome">Nome</label>
-  </span>
-    <span class="ui-float-label my-2">
-      <input class="rounded" id="cpf" type="text" size="30" type="text" [(ngModel)]="objeto.cpf">
+    </span>
+    <span class="ui-float-label my-4">
+      <input class="rounded" id="cpf" type="text" size="30" pInputText [(ngModel)]="objeto.cpf">
       <label for="cpf">CPF</label>
-  </span>
-    <span class="ui-float-label my-2">
-      <input class="rounded" id="telefone" type="text" size="30" type="text" [(ngModel)]="objeto.telefone">
+    </span>
+    <span class="ui-float-label my-4">
+      <input class="rounded" id="telefone" type="text" size="30" pInputText [(ngModel)]="objeto.telefone">
       <label for="telefone">Telefone</label>
   </span>
   </div>

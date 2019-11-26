@@ -1,0 +1,19 @@
+<p-card header="Produto">
+  <div class="container">
+    <div class="text-left m-2">
+      <button pButton
+              (click)="salvar()"
+              type="button"
+              label="Salvar"
+              class="btn btn-primary"></button>
+    </div>
+    <span class="ui-float-label my-4">
+      <input class="rounded" id="descricao" type="text" size="30" pInputText [(ngModel)]="objeto.descricao">
+      <label for="descricao">Descrição</label>
+    </span>
+    <span class="ui-float-label my-4">
+      <input class="rounded" id="valorUnitario" type="text" size="30" pInputText [(ngModel)]="objeto.valorUnitario">
+      <label for="valorUnitario">Valor Unitário</label>
+    </span>
+  </div>
+</p-card>

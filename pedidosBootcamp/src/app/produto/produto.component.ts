@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import {ClienteService} from '../service/cliente.service';
-import {Cliente} from '../model/cliente';
-import {ConfirmationService, Message, MessageService} from 'primeng/api';
-import {error} from 'util';
 import {ListComponent} from '../component/list.component';
+import {Cliente} from '../model/cliente';
+import {Produto} from '../model/Produto';
+import {ConfirmationService, MessageService} from 'primeng/api';
+import {ProdutoService} from '../service/produto.service';
+import {error} from "util";
 
 @Component({
-  selector: 'app-cliente',
-  templateUrl: './cliente.component.html',
-  styleUrls: ['./cliente.component.scss']
+  selector: 'app-produto',
+  templateUrl: './produto.component.html',
+  styleUrls: ['./produto.component.scss']
 })
-export class ClienteComponent extends ListComponent<Cliente> implements OnInit {
+export class ProdutoComponent extends ListComponent<Produto> implements OnInit {
 
-  constructor(private clienteService: ClienteService,
+  constructor(private produtoService: ProdutoService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService) {
     super();
     this.cols = [
       { field: 'id', header: 'ID' },
-      {field: 'nome', header: 'Nome' },
-      { field: 'cpf', header: 'CPF' },
-      { field: 'telefone', header: 'Telefone' }
+      {field: 'descricao', header: 'Descrição' },
+      { field: 'valorUnitario', header: 'Valor Unitário' }
     ];
   }
 
@@ -29,14 +29,14 @@ export class ClienteComponent extends ListComponent<Cliente> implements OnInit {
 
   carregarLista(): void {
     this.loading = true;
-    this.clienteService.findAll().subscribe(clientes => {
-      this.lista = clientes;
+    this.produtoService.findAll().subscribe(produtos => {
+      this.lista = produtos;
       this.loading = false;
     });
   }
 
   private deletar(id: number): void {
-    this.clienteService.delete(id).subscribe( res => {
+    this.produtoService.delete(id).subscribe( res => {
       this.messageService.add({
         severity: 'success',
         summary: 'Removido com sucesso'
@@ -61,4 +61,5 @@ export class ClienteComponent extends ListComponent<Cliente> implements OnInit {
       rejectLabel: 'Nao'
     });
   }
+
 }

@@ -1,4 +1,4 @@
-<p-card header="Lista de Clientes">
+<p-card header="Lista de Pedidos">
   <div class="text-right m-2">
     <button pButton
             [routerLink]="['form']"
@@ -9,18 +9,24 @@
   </div>
   <p-table [columns]="cols" [value]="lista"
            [loading]="loading" [lazy]="true" (onLazyLoad)="carregarLista()">
-    <ng-template pTemplate="header" let-clientes>
+    <ng-template pTemplate="header" let-pedidos>
       <tr>
-        <th *ngFor="let cliente of clientes">
-          {{cliente.header}}
+        <th *ngFor="let pedido of pedidos">
+          {{pedido.header}}
         </th>
         <th class="text-center">Ações</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-row let-columns="clientes">
+    <ng-template pTemplate="body" let-row let-columns="pedidos">
       <tr>
-        <td *ngFor="let cliente of cols">
-          {{ row[cliente.field] }}
+        <td *ngFor="let col of cols">
+          <ng-container *ngIf="col.field == 'cliente'; else br">
+            {{ row[col.field]?.nome }}
+          </ng-container>
+          <ng-template #br >
+            {{ row[col.field] }}
+          </ng-template>
+
         </td>
         <td class="text-center">
           <i title="Editar" class="pi pi-pencil" [routerLink]="['form']" [queryParams]="{id: row['id']}"></i>
@@ -32,7 +38,7 @@
       <tr>Sem Registros.</tr>
     </ng-template>
     <ng-template pTemplate="summary">
-      {{lista?.length}} Clientes
+      {{lista?.length}} Pedidos
     </ng-template>
   </p-table>
   <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>

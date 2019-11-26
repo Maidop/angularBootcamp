@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ClienteService} from '../../service/cliente.service';
 import {Cliente} from '../../model/cliente';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MessageService} from 'primeng/api';
+import {MessageService, SelectItem} from 'primeng/api';
 import {error} from 'util';
 
 @Component({
@@ -12,6 +12,8 @@ import {error} from 'util';
 })
 export class ClienteFormComponent implements OnInit {
   objeto: Cliente;
+  clientes: Cliente[];
+  clientesDropdown: SelectItem[];
 
   constructor(private clienteService: ClienteService,
               private activatedRoute: ActivatedRoute,
@@ -27,6 +29,14 @@ export class ClienteFormComponent implements OnInit {
       } else {
         this.resetaForm();
       }
+    });
+
+    this.clientesDropdown = this.clientes.map(val => {
+      const selectItem: SelectItem = {
+        label: val.nome,
+        value: val
+      };
+      return selectItem;
     });
   }
 
