@@ -1,0 +1,23 @@
+<p-card header="Cliente">
+  <div class="container">
+    <div class="text-left m-2">
+      <button pButton
+              (click)="salvar()"
+              type="button"
+              label="Novo"
+              class="btn btn-primary">Salvar</button>
+    </div>
+    <span class="ui-float-label my-2">
+      <input class="rounded" id="nome" type="text" size="30" type="text" [(ngModel)]="objeto.nome">
+      <label for="nome">Nome</label>
+  </span>
+    <span class="ui-float-label my-2">
+      <input class="rounded" id="cpf" type="text" size="30" type="text" [(ngModel)]="objeto.cpf">
+      <label for="cpf">CPF</label>
+  </span>
+    <span class="ui-float-label my-2">
+      <input class="rounded" id="telefone" type="text" size="30" type="text" [(ngModel)]="objeto.telefone">
+      <label for="telefone">Telefone</label>
+  </span>
+  </div>
+</p-card>
