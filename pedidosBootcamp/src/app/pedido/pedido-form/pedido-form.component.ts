@@ -2,29 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import {Pedido} from '../../model/pedido';
 import {PedidoService} from '../../service/pedido.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MessageService, SelectItem} from 'primeng/api';
+import {MessageService} from 'primeng/api';
 import {Cliente} from '../../model/cliente';
 import {ClienteService} from '../../service/cliente.service';
 import {ProdutoService} from '../../service/produto.service';
 import {Produto} from '../../model/Produto';
 import {PedidoItem} from '../../model/pedidoItem';
+import {FormComponent} from '../../component/form.component';
 
 @Component({
   selector: 'app-pedido-form',
   templateUrl: './pedido-form.component.html',
   styleUrls: ['./pedido-form.component.scss']
 })
-export class PedidoFormComponent implements OnInit {
+export class PedidoFormComponent extends FormComponent<Pedido> implements OnInit {
 
-  pedido: Pedido;
+  objeto: Pedido;
   clienteList: Cliente[];
+  pedidoItem = new PedidoItem();
   produtoList: Produto[];
   produto: Produto;
-  display = false;
-  pedidoItem: PedidoItem;
   pedidoItemList: PedidoItem[];
-  clienteDropdown: SelectItem[];
-  selectedCliente: Cliente;
+  displayItem = false;
 
   constructor(private pedidoService: PedidoService,
               private activatedRoute: ActivatedRoute,
@@ -32,65 +31,72 @@ export class PedidoFormComponent implements OnInit {
               private router: Router,
               private clienteService: ClienteService,
               private produtoService: ProdutoService) {
-    this.clienteService.findAll().subscribe(lista => {
-      this.clienteList = lista;
-
-      this.clienteDropdown = this.clienteList.map(val => {
-        const selectItem: SelectItem = {
-          label: val.nome,
-          value: val.id
-        };
-        return selectItem;
-      })
-    });
-    produtoService.findAll().subscribe(res => this.produtoList = res);
-    this.pedidoItem = new PedidoItem();
-    this.pedidoItemList = [];
-  }
-
-  salvar(): void {
-    this.pedido.cliente = this.selectedCliente;
-    this.pedidoService.save(this.pedido).subscribe(res => {
-      this.pedido = res;
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Pedido realizado com sucesso'
-      });
-
-      this.router.navigateByUrl('pedido');
-    }, error => {
-      this.messageService.add({
-        severity: 'error',
-        summary: error.error.message
-      })
-    });
-    this.router.navigateByUrl('/pedido');
+    super();
+    this.clienteService.findAll().subscribe(clientes => this.clienteList = clientes);
+    this.produtoService.findAll().subscribe(produtos => this.produtoList = produtos);
   }
 
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe(params => {
       if (params.has('id')) {
+        // tslint:disable-next-line:radix
         this.pedidoService.findOne(parseInt(params.get('id'))).subscribe(res => {
-          this.pedido = res;
+          this.objeto = res;
         });
       } else {
-        this.newPedido();
+        this.resetaForm();
       }
     });
   }
 
-  private newPedido() {
-    this.pedido = new Pedido();
-    this.pedido.pedidoItemList = [];
+  resetaForm(): void {
+    this.objeto = new Pedido();
+    this.objeto.dataEmissao = new Date();
+    this.objeto.pedidoItemList = [];
   }
 
-  showDialog() {
-    this.display = true;
+  preSave(): void {
+    const erros: string[] = [];
+    if (!this.objeto.cliente) {
+      erros.push('Selecione um cliente');
+    }
+
+    if (!(this.objeto.pedidoItemList.length > 0)) {
+      erros.push('Adicione ao menos um item ao pedido.');
+    }
+
+    if (erros.length) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Atenção',
+        detail: erros[0]
+      });
+      throw new Error(erros[0]);
+    }
   }
 
-  setPedidoItem() {
-    this.pedidoItemList.push(this.pedidoItem);
-    this.pedido.pedidoItemList = this.pedidoItemList;
-    this.display = false;
+  salvar(): void {
+    super.salvar();
+    this.pedidoService.save(this.objeto).subscribe(res => {
+      this.objeto = res;
+
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Salvo com sucesso!'
+      });
+
+      this.router.navigateByUrl('pedido');
+    }, erro => {
+      this.messageService.add({
+        severity: 'error',
+        summary: erro.error.message
+      });
+    });
+  }
+
+  addLista() {
+    this.objeto.pedidoItemList.push(this.pedidoItem);
+    this.displayItem = false;
+    this.pedidoItem = new PedidoItem();
   }
 }

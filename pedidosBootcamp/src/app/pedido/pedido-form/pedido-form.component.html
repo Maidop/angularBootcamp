@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-12 my-2">
         <span class="ui-float-label">
-          <p-calendar [(ngModel)]="pedido.dataEmissao"
+          <p-calendar [(ngModel)]="objeto.dataEmissao"
                       dateFormat="dd/MM/yy"
                       id="dataEmissao"
                       [showIcon]="true"></p-calendar>
@@ -19,45 +19,104 @@
       </div>
       <div class="col-12 my-2">
         <p-dropdown [options]="clienteList"
-                    [(ngModel)]="pedido.cliente"
+                    [(ngModel)]="objeto.cliente"
                     placeholder="Cliente"
                     optionLabel="nome"
                     [showClear]="true"></p-dropdown>
       </div>
       <div class="col-12">
-        <h4>Total: {{pedido.total | currency: 'BRL' }}</h4>
+        <h4>Total: {{objeto.total | currency: 'BRL' }}</h4>
+      </div>
+      <div class="text-right m-2 mb-2">
+        <button pButton
+                (click)="displayItem = true"
+                type="button"
+                label="Adicionar"
+                class="btn btn-primary mb-2"></button>
       </div>
     </div>
   </div>
 </p-card>
+<!-- Inicio Tabela produtos -->
 <p-card>
   <div class="container">
     <div class="row">
-      <div class="col">
-        <div class="ui-g ui-fluid">
-          <div class="ui-g-12 ui-md-4">
-            <div class="ui-inputgroup">
-              <span class="ui-inputgroup-addon"></span>
-              <input type="text" pInputText placeholder="Produto">
-            </div>
-          </div>
-
-          <div class="ui-g-12 ui-md-4">
-            <div class="ui-inputgroup">
-              <span class="ui-inputgroup-addon">$</span>
-              <input type="text" pInputText placeholder="Price">
-              <span class="ui-inputgroup-addon">.00</span>
-            </div>
-          </div>
-
-          <div class="ui-g-12 ui-md-4">
-            <div class="ui-inputgroup">
-              <span class="ui-inputgroup-addon"></span>
-              <input type="text" pInputText placeholder="Website">
-            </div>
-          </div>
-        </div>
+      <div class="col-12">
+        <p-table [value]="pedidoItemList">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Produto</th>
+              <th>Quantidade</th>
+              <th>Valor Unitário</th>
+              <th>Desconto</th>
+              <th>Valor Total</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item>
+            <tr>
+              <td>{{item?.produto?.descricao}}</td>
+              <td>{{item?.produto?.quantidade}}</td>
+              <td>{{item?.produto?.valorUnitario}}</td>
+              <td>{{item?.produto?.desconto}}</td>
+              <td>{{item?.produto?.valorTotal}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
       </div>
     </div>
   </div>
 </p-card>
+<p-dialog header="Item" [(visible)]="displayItem">
+  <div class="row">
+    <div class="col-12">
+      <span class="ui-float-label my-2">
+        <p-dropdown [(ngModel)]="pedidoItem.produto"
+                    [options]="produtoList"
+                    optionLabel="descricao"
+                    appendTo="body"
+                    placeholder="Selecione um Produto"
+                    class="my-2" id="produto"
+                    [showClear]="true"></p-dropdown>
+      </span>
+    </div>
+    <div class="col-12">
+      <span  class="ui-float-label my-2">
+        <input [(ngModel)]="pedidoItem.valorUnitario"
+               type="number"
+               id="valorUnitario" class="my-2" pInputText>
+        <label for="valorUnitario">Valor Unitário</label>
+      </span>
+    </div>
+    <div class="col-12">
+      <span  class="ui-float-label my-2">
+        <input [(ngModel)]="pedidoItem.quantidade"
+               type="number"
+               id="quantidade" class="my-2" pInputText>
+        <label for="quantidade">Quantidade</label>
+      </span>
+    </div>
+    <div class="col-12">
+      <span  class="ui-float-label my-2">
+        <input [(ngModel)]="pedidoItem.desconto"
+               type="number"
+               id="desconto" class="my-2" pInputText>
+        <label for="desconto">Desconto</label>
+      </span>
+    </div>
+  </div>
+  <p-footer>
+    <button pButton
+            (click)="displayItem = false"
+            type="button"
+            label="Fechar"
+            class="ui-button-secondary mr-2"></button>
+    <button pButton
+            (click)="addLista()"
+            type="button"
+            label="Adicionar"
+            class="ui-button-raised mb-2"></button>
+  </p-footer>
+</p-dialog>
+
+
+
