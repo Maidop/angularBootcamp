@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,13 +14,14 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastModule} from 'primeng/toast';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {DropdownModule, InputTextModule, SidebarModule} from 'primeng/primeng';
+import {CalendarModule, DialogModule, DropdownModule, InputTextModule, SidebarModule} from 'primeng/primeng';
 import {SidebarService} from './service/sidebar.service';
 import { PedidoComponent } from './pedido/pedido.component';
 import { PedidoFormComponent } from './pedido/pedido-form/pedido-form.component';
 import { ProdutoComponent } from './produto/produto.component';
 import { ProdutoFormComponent } from './produto/produto-form/produto-form.component';
 import { PedidoItemComponent } from './pedido-item/pedido-item.component';
+import localePt from '@angular/common/locales/pt';
 
 @NgModule({
   declarations: [
@@ -46,12 +47,18 @@ import { PedidoItemComponent } from './pedido-item/pedido-item.component';
     ConfirmDialogModule,
     SidebarModule,
     DropdownModule,
-    InputTextModule
+    InputTextModule,
+    CalendarModule,
+    DialogModule
   ],
   providers: [
     MessageService,
     ConfirmationService,
-    SidebarService
+    SidebarService,
+    {
+      provide: LOCALE_ID,
+      useValue: 'pt'
+    }
   ],
   bootstrap: [AppComponent]
 })
