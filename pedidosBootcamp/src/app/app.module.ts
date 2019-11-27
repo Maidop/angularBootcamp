@@ -14,7 +14,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastModule} from 'primeng/toast';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {DropdownModule, SidebarModule} from 'primeng/primeng';
+import {DropdownModule, InputTextModule, SidebarModule} from 'primeng/primeng';
 import {SidebarService} from './service/sidebar.service';
 import { PedidoComponent } from './pedido/pedido.component';
 import { PedidoFormComponent } from './pedido/pedido-form/pedido-form.component';
@@ -46,6 +46,7 @@ import { PedidoItemComponent } from './pedido-item/pedido-item.component';
     ConfirmDialogModule,
     SidebarModule,
     DropdownModule,
+    InputTextModule
   ],
   providers: [
     MessageService,
