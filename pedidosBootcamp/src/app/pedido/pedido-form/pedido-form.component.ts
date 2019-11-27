@@ -17,8 +17,8 @@ import {PedidoItem} from '../../model/pedidoItem';
 export class PedidoFormComponent implements OnInit {
 
   pedido: Pedido;
-  clientesList: Cliente[];
-  produtosList: Produto[];
+  clienteList: Cliente[];
+  produtoList: Produto[];
   produto: Produto;
   display = false;
   pedidoItem: PedidoItem;
@@ -33,9 +33,9 @@ export class PedidoFormComponent implements OnInit {
               private clienteService: ClienteService,
               private produtoService: ProdutoService) {
     this.clienteService.findAll().subscribe(lista => {
-      this.clientesList = lista;
+      this.clienteList = lista;
 
-      this.clienteDropdown = this.clientesList.map(val => {
+      this.clienteDropdown = this.clienteList.map(val => {
         const selectItem: SelectItem = {
           label: val.nome,
           value: val.id
@@ -43,12 +43,12 @@ export class PedidoFormComponent implements OnInit {
         return selectItem;
       })
     });
-    produtoService.findAll().subscribe(res => this.produtosList = res);
+    produtoService.findAll().subscribe(res => this.produtoList = res);
     this.pedidoItem = new PedidoItem();
     this.pedidoItemList = [];
   }
 
-  save(): void {
+  salvar(): void {
     this.pedido.cliente = this.selectedCliente;
     this.pedidoService.save(this.pedido).subscribe(res => {
       this.pedido = res;

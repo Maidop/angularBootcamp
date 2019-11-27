@@ -1,39 +1,39 @@
-<p-card header="Cliente">
-  <div class="pb-2 m-2 text-right">
-    <button pButton type="button" (click)="save()" label="Salvar" class="ui-button-raised"></button>
-  </div>
+<p-card header="Pedido">
   <div class="container">
-    <p-card header="Dados do Pedido">
-      <p-calendar [(ngModel)]="pedido.dataEmissao" dateFormat="dd/MM/yy"></p-calendar>
-    </p-card>
-
-    <p-card header="Atribuição ao Cliente">
-      <p-dropdown [options]="clientesList" [(ngModel)]="pedido.cliente" optionLabel="nome"></p-dropdown>
-    </p-card>
-
-    <button type="button" (click)="showDialog()" pButton icon="pi pi-info-circle" label="Realizar Pedido"></button>
-
-    <p-dialog header="Item Pedido" [(visible)]="display" [style]="{width: '500px', height: '500px'}">
-      <p-dropdown [options]="produtosList" [(ngModel)]="pedidoItem.produto" optionLabel="descricao"></p-dropdown>
-
-      <span class="ui-float-label mt-5">
-          <input id="quantidadeProduto" type="number" size="30" pInputText [(ngModel)]="pedidoItem.quantidade">
-          <label for="quantidadeProduto">Quantidade de Produto</label>
-        </span>
-
-      <span class="ui-float-label mt-5">
-          <input id="valorUnitario" type="number" size="30" pInputText [(ngModel)]="pedidoItem.valorUnitario">
-          <label for="valorUnitario">Valor Unitario</label>
-        </span>
-
-      <span class="ui-float-label mt-5">
-          <input id="desconto" type="number" size="30" pInputText [(ngModel)]="pedidoItem.desconto">
-          <label for="desconto">Desconto</label>
+    <div class="text-left m-2 mb-2">
+      <button pButton
+              (click)="salvar()"
+              type="button"
+              label="Salvar"
+              class="btn btn-primary mb-2"></button>
+    </div>
+    <div class="row">
+      <div class="col-12 my-2">
+        <span class="ui-float-label">
+          <p-calendar [(ngModel)]="pedido.dataEmissao"
+                      dateFormat="dd/MM/yy"
+                      id="dataEmissao"
+                      [showIcon]="true"></p-calendar>
+           <label for="dataEmissao">Data de Emissão</label>
       </span>
-
-      <button pButton type="button" (click)="setPedidoItem()" label="Salvar" style="margin-top: 10px" class="ui-button-raised"></button>
-
-    </p-dialog>
+      </div>
+      <div class="col-12 my-2">
+        <p-dropdown [options]="clienteList"
+                    [(ngModel)]="pedido.cliente"
+                    placeholder="Cliente"
+                    optionLabel="nome"
+                    [showClear]="true"></p-dropdown>
+      </div>
+      <div class="col-12">
+        <h4>Total: {{pedido.total | currency: 'BRL' }}</h4>
+      </div>
+    </div>
   </div>
+</p-card>
+<p-card>
+  <div class="container">
+    <div class="row">
 
+    </div>
+  </div>
 </p-card>
