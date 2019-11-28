@@ -7,4 +7,7 @@ export class PedidoItem {
   valorUnitario: number;
   quantidade: number;
   desconto: number;
+  totalValor = 0;
+  totalQuantidade = 0;
+  totalDesconto = 0;
 }

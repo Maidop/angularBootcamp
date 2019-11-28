@@ -1,27 +1,37 @@
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule} from '@angular/platform-browser';
 import {LOCALE_ID, NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {HomeComponent} from './home/home.component';
 import {HttpClientModule} from '@angular/common/http';
-import { ClienteComponent } from './cliente/cliente.component';
+import {ClienteComponent} from './cliente/cliente.component';
 import {TableModule} from 'primeng/table';
 import {CardModule} from 'primeng/card';
-import { ClienteFormComponent } from './cliente/cliente-form/cliente-form.component';
+import {ClienteFormComponent} from './cliente/cliente-form/cliente-form.component';
 import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastModule} from 'primeng/toast';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {CalendarModule, DialogModule, DropdownModule, InputTextModule, SidebarModule} from 'primeng/primeng';
+import {
+  AutoCompleteModule,
+  CalendarModule,
+  DialogModule,
+  DropdownModule,
+  InputTextModule,
+  SidebarModule,
+  SplitButtonModule
+} from 'primeng/primeng';
 import {SidebarService} from './service/sidebar.service';
-import { PedidoComponent } from './pedido/pedido.component';
-import { PedidoFormComponent } from './pedido/pedido-form/pedido-form.component';
-import { ProdutoComponent } from './produto/produto.component';
-import { ProdutoFormComponent } from './produto/produto-form/produto-form.component';
-import { PedidoItemComponent } from './pedido-item/pedido-item.component';
+import {ProdutoComponent} from './produto/produto.component';
+import {ProdutoFormComponent} from './produto/produto-form/produto-form.component';
 import localePt from '@angular/common/locales/pt';
+import {registerLocaleData} from '@angular/common';
+import {PedidoModule} from './pedido/pedido.module';
+import { MarcaTextoDirective } from './directive/marca-texto.directive';
+
+registerLocaleData(localePt, 'pt');
 
 @NgModule({
   declarations: [
@@ -29,11 +39,10 @@ import localePt from '@angular/common/locales/pt';
     HomeComponent,
     ClienteComponent,
     ClienteFormComponent,
-    PedidoComponent,
-    PedidoFormComponent,
     ProdutoComponent,
     ProdutoFormComponent,
-    PedidoItemComponent
+    MarcaTextoDirective,
+
   ],
   imports: [
     BrowserModule,
@@ -49,7 +58,10 @@ import localePt from '@angular/common/locales/pt';
     DropdownModule,
     InputTextModule,
     CalendarModule,
-    DialogModule
+    DialogModule,
+    AutoCompleteModule,
+    SplitButtonModule,
+    PedidoModule,
   ],
   providers: [
     MessageService,

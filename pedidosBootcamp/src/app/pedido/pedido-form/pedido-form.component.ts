@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Pedido} from '../../model/pedido';
 import {PedidoService} from '../../service/pedido.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MessageService} from 'primeng/api';
+import {MenuItem, MessageService} from 'primeng/api';
 import {Cliente} from '../../model/cliente';
 import {ClienteService} from '../../service/cliente.service';
-import {ProdutoService} from '../../service/produto.service';
 import {Produto} from '../../model/Produto';
 import {PedidoItem} from '../../model/pedidoItem';
 import {FormComponent} from '../../component/form.component';
@@ -16,24 +15,27 @@ import {FormComponent} from '../../component/form.component';
   styleUrls: ['./pedido-form.component.scss']
 })
 export class PedidoFormComponent extends FormComponent<Pedido> implements OnInit {
-
-  objeto: Pedido;
   clienteList: Cliente[];
-  pedidoItem = new PedidoItem();
-  produtoList: Produto[];
   produto: Produto;
-  pedidoItemList: PedidoItem[];
   displayItem = false;
+  pedidoItem: PedidoItem;
+  rowIndex: number;
+  menuItens: MenuItem[];
 
   constructor(private pedidoService: PedidoService,
               private activatedRoute: ActivatedRoute,
               private messageService: MessageService,
               private router: Router,
-              private clienteService: ClienteService,
-              private produtoService: ProdutoService) {
+              private clienteService: ClienteService) {
     super();
     this.clienteService.findAll().subscribe(clientes => this.clienteList = clientes);
-    this.produtoService.findAll().subscribe(produtos => this.produtoList = produtos);
+    this.menuItens = [
+      {
+        label: 'Limpar',
+        icon: 'pi pi-trash',
+        command: () => this.limparItens(),
+      }
+    ];
   }
 
   ngOnInit(): void {
@@ -47,6 +49,7 @@ export class PedidoFormComponent extends FormComponent<Pedido> implements OnInit
         this.resetaForm();
       }
     });
+    this.calculaTotais();
   }
 
   resetaForm(): void {
@@ -94,9 +97,39 @@ export class PedidoFormComponent extends FormComponent<Pedido> implements OnInit
     });
   }
 
-  addLista() {
-    this.objeto.pedidoItemList.push(this.pedidoItem);
-    this.displayItem = false;
+  editar(rowIndex: number): void {
+    this.rowIndex = rowIndex;
+    this.pedidoItem = JSON.parse(JSON.stringify(this.objeto.pedidoItemList[rowIndex]));
+    this.displayItem = true;
+  }
+
+  openModalItem(): void {
+    this.displayItem = true;
     this.pedidoItem = new PedidoItem();
+    this.rowIndex = -1;
+  }
+
+  salvarItem(pedidoItem: PedidoItem) {
+    if (this.rowIndex >= 0) {
+      this.objeto.pedidoItemList[this.rowIndex] = JSON.parse(JSON.stringify(pedidoItem));
+    } else {
+      this.objeto.pedidoItemList.push(pedidoItem);
+    }
+  }
+
+  excluir(index: number): void {
+    this.objeto.pedidoItemList.splice(index, 1);
+  }
+
+  private limparItens() {
+    return this.objeto.pedidoItemList = [];
+  }
+
+  calculaTotais(): void {
+    for (const item of this.objeto.pedidoItemList) {
+      this.pedidoItem.totalQuantidade += item.quantidade;
+      this.pedidoItem.totalDesconto += item.desconto;
+      this.pedidoItem.totalValor += item.valorUnitario;
+    }
   }
 }

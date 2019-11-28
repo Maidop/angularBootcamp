@@ -1,12 +1,10 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {ClienteComponent} from './cliente/cliente.component';
 import {ClienteFormComponent} from './cliente/cliente-form/cliente-form.component';
-import {PedidoComponent} from './pedido/pedido.component';
 import {ProdutoComponent} from './produto/produto.component';
 import {ProdutoFormComponent} from './produto/produto-form/produto-form.component';
-import {PedidoFormComponent} from './pedido/pedido-form/pedido-form.component';
 
 
 const routes: Routes = [
@@ -26,10 +24,7 @@ const routes: Routes = [
     path: 'produto/form', component: ProdutoFormComponent,
   },
   {
-    path: 'pedido', component: PedidoComponent,
-  },
-  {
-    path: 'pedido/form', component: PedidoFormComponent,
+    path: 'pedido', loadChildren: () => import('./pedido/pedido.module').then(m => m.PedidoModule),
   }
 ];
 

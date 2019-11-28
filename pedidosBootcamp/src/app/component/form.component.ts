@@ -1,5 +1,7 @@
+import {Input} from '@angular/core';
+
 export abstract class FormComponent<T> {
-  objeto: T;
+  @Input() objeto: T;
 
   abstract resetaForm(): void;
 

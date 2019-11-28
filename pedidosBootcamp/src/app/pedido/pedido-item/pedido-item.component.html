@@ -1,0 +1,56 @@
+<p-dialog header="Item"
+          [style]="{width: '400px'}"
+          [(visible)]="displayItem"
+          (onHide)="this.onClose.emit()">
+  <div class="row">
+    <div class="col-12">
+      <span class="ui-float-label my-2">
+        <p-autoComplete [(ngModel)]="objeto.produto"
+                        [suggestions]="produtoList"
+                        (completeMethod)="filtroProdutoSimples($event)"
+                        [dropdown]="true"
+                        (onSelect)="produtoSelecionado($event)"
+                        delay="500"
+                        appendTo="body"
+                        field="descricao" [size]="30"
+                        [minLength]="1"></p-autoComplete>
+      </span>
+    </div>
+    <div class="col-12">
+      <span  class="ui-float-label my-2">
+        <input [(ngModel)]="objeto.valorUnitario"
+               type="number"
+               id="valorUnitario" class="my-2" pInputText>
+        <label for="valorUnitario">Valor Unitário</label>
+      </span>
+    </div>
+    <div class="col-12">
+      <span  class="ui-float-label my-2">
+        <input [(ngModel)]="objeto.quantidade"
+               type="number"
+               id="quantidade" class="my-2" pInputText>
+        <label for="quantidade">Quantidade</label>
+      </span>
+    </div>
+    <div class="col-12">
+      <span  class="ui-float-label my-2">
+        <input [(ngModel)]="objeto.desconto"
+               type="number"
+               id="desconto" class="my-2" pInputText>
+        <label for="desconto">Desconto</label>
+      </span>
+    </div>
+  </div>
+  <p-footer>
+    <button pButton
+            (click)="onClose.emit()"
+            type="button"
+            label="Fechar"
+            class="ui-button-secondary mr-2"></button>
+    <button pButton
+            (click)="addLista()"
+            type="button"
+            label="Adicionar"
+            class="ui-button-raised mb-2"></button>
+  </p-footer>
+</p-dialog>
